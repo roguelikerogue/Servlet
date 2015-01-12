@@ -38,7 +38,9 @@ If you google tomcat redirect http to https you wil find plenty of links e.g. re
 
 @Path("/services")
 public class Resources {
-
+	
+	
+   //THIS IS AN EDIT
 	@GET
 	@Path("protoTest")
 	@Produces(MediaType.TEXT_HTML)
