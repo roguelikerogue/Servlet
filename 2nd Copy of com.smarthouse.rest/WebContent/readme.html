@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Read Me</title>
+</head>
+<body><p>What we need to do:</p>
+
+<p>There will be two smart houses, so we will need the servlet to have two instances of the smartHouse class. Each house holds the states of every device. Worry about making two later if this is unclear.</p>
+
+<p>I have sent you a file called HOUSE. Open it in a text editor. This is how Sam would like the smart house variables organised. This includes some arrays. Try design the smart house class the same way. This might change, but it's all we have to work with now.</p>
+
+<p>Next, Sam gave us 4 HTTP methods (URLs) in the restful pdf he sent us. For each of those methods, we need to send the server the corresponding string from Mathias' document.</p>
+
+<p>HTTP URL 1:POST Login -- use the authenticate string at the bottom of mathias' document. I have already done the http part to read the url. Modify this info to make a string of the format authenticate_Username_password_ </p>
+
+<p>--returns true/false</p>
+
+<p>HTTP 2: GET Houses' addresses and IDS -- This will return the two house addresses and IDs. In future we will modify it to only return the houses that particular user can access. There is no exact command for this in Mathias' document as the implementation is different here. The server team should probably change this.</p>
+
+<p>I sorta have a URL path for this already with {email} in the path. This can be modified slightly.</p>
+
+<p>-- returns some mystery string that we haven't seen</p>
+
+<p>HTTP 3: GET all device states in a given house: This seems to combine Mathias' second and third commands in the list together. This may also need to be changed by Sam/ the server group</p>
+
+<p>You will need to write a new path for this one.</p>
+
+<p>HTTP 4: POST device state change. Here you'll need to set up another url path that</p>
+
+<p>You will need to write a new path for this one too. Look at my LOGIN path. It will work the same way.</p>
+
+<p>-- returns some mystery string that we haven't seen</p>
+
+<p>NOW BACK TO JSON PARSING!<br />
+</p>
+
+
+<p>For JSON, we need to somehow parse the strings with all the device states into JSON objects. This can be done a few ways with a few different libraries. It is best to use Jackson since I already have it imported into my project. I use it in my JSONTest method. You should look up its API here: http://jackson.codehaus.org/1.6.2/javadoc/org/codehaus/jackson/map/ObjectMapper.html</p>
+
+<p>It's really a big problem that we don't know what the strings the server sends will look like. We need to ask Dino or someone to send an example before we can write an algorithm to do everything properly.</p>
+
+<p>All we can do for now:</p>
+
+<p>1 REDESIGN the smartHouse class to have all the states like Sam wants</p>
+
+<p>2 Implement the HTTP stuff above</p>
+
+<p>3 Generate JSON objects from the house. In particular, if we can generate an object for just one particular state and not the whole house every time.<br />
+</p>
+</body>
+</html>
