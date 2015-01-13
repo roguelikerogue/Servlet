@@ -167,6 +167,61 @@ public class Resources {
 		return sender.getResponse(message);
 
 	}
+	
+	@POST
+	@Path("loginTest")
+	@Produces(MediaType.TEXT_HTML)
+	// can also do TEXT_PLAIN
+	public String loginTest(
+			@DefaultValue("default SSN") @QueryParam("SSN") String SSN,
+			@DefaultValue("default password") @QueryParam("password") String password) {
+		System.out.println("SSN = " + SSN + " Password: " + password);
+		Sender sender = new Sender();
+		// REMOVE "TEST" from String
+		//String message = "authenticate_" + SSN + "_" + password + "_";
+		String message ="Unauthorized_DEFAULT_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		
+		//example confirmations
+		String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
+		//String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
+		//String confirmation = sender.getResponse(message);
+		String response = "error";
+		if(confirmation.contains("authenticate_")){
+			
+			response = confirmation; // same string minus"authenticate_ part
+			//response = confirmation.substring(16, confirmation.length()); // same string minus"authenticate_ part
+			int indexArrayLength = 10;
+			int[] indexArray= new int[indexArrayLength];
+			//Print out all instances 
+			int indexCount = 0;
+			//This method counts the occurrence of "_" puts their indexes in an array
+			for (int i = -1; (i = response.indexOf("_", i + 1)) != -1; ) {
+				indexArray[indexCount] = i;
+			    System.out.println("Value of index "+indexArray+": "+ indexArray[indexCount]);
+				indexCount++;
+			}
+			for(int i = 0; i<indexArrayLength; i++){
+				System.out.println("Test: "+ indexArray[i]);
+			}
+			
+			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID. There are some extra parameters we might use
+			String houseAddress = response.substring(indexArray[0]+1, indexArray[4]);
+			houseAddress = houseAddress.replaceAll("_", " ");
+			String houseID = response.substring(indexArray[4]+1, indexArray[5]);
+			//int houseID = String.parseInt(response.substring(indexArray[3]+1, indexArray[4]+1));
+			System.out.println(houseID);
+			System.out.println(houseAddress);
+			
+			
+			//response = response.replaceAll("_", " ");
+			//response = sender.getResponse(message);
+		}
+		//return response;
+		//return confirmation;
+		return sender.getResponse(message);
+
+	}
+
 
 	@POST
 	@Path("test")
