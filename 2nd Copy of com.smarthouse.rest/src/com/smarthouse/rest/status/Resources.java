@@ -124,17 +124,17 @@ public class Resources {
 		System.out.println("SSN = " + SSN + " Password: " + password);
 		Sender sender = new Sender();
 		// REMOVE "TEST" from String
-		//String message = "authenticate_" + SSN + "_" + password + "_";
-		String message ="unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		String message = "authenticate_" + SSN + "_" + password + "_";
+		//String message ="unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
 		
 		//example confirmations
-		String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
+		//String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
 		//String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
-		//String confirmation = sender.getResponse(message);
+		String confirmation = sender.getResponse(message);
 		String response = "error";
 		if(confirmation.contains("authenticate_")){
 			
-			response = confirmation; // same string minus"authenticate_ part
+			//response = confirmation; // same string minus"authenticate_ part
 			//response = confirmation.substring(16, confirmation.length()); // same string minus"authenticate_ part
 			int indexArrayLength = 10;
 			int[] indexArray= new int[indexArrayLength];
@@ -174,7 +174,7 @@ public class Resources {
 	// can also do TEXT_PLAIN
 	public String authTest() {
 		Sender sender = new Sender();
-		String message = "unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		String message = "user_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
 		
 		return sender.getResponse(message);
 
