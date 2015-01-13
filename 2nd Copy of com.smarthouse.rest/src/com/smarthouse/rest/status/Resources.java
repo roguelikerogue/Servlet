@@ -134,7 +134,7 @@ public class Resources {
 		String response = "error";
 		if(confirmation.contains("authenticate_")){
 			
-			//response = confirmation; // same string minus"authenticate_ part
+			response = confirmation;
 			//response = confirmation.substring(16, confirmation.length()); // same string minus"authenticate_ part
 			int indexArrayLength = 10;
 			int[] indexArray= new int[indexArrayLength];
@@ -147,7 +147,7 @@ public class Resources {
 				indexCount++;
 			}
 			for(int i = 0; i<indexArrayLength; i++){
-				System.out.println("Test: "+ indexArray[i]);
+				//System.out.println("Test: "+ indexArray[i]);
 			}
 			
 			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID. There are some extra parameters we might use
@@ -174,7 +174,8 @@ public class Resources {
 	// can also do TEXT_PLAIN
 	public String authTest() {
 		Sender sender = new Sender();
-		String message = "user_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		//String message = "regUnanthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		String message = "regUnanthorized_firstName_lastName_123_email_password_strName_1234_city_12345_country_";
 		
 		return sender.getResponse(message);
 

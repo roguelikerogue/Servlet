@@ -12,8 +12,9 @@ public class JSONGenerator {
 	
 	private String[] statesArray;
 	private String JSONString = "default JSON";
+	private String serverResponse;
 	
-	public JSONGenerator(String[] statesArray){
+	public JSONGenerator(String serverResponse){
 		this.statesArray = statesArray;
 			
 		
