@@ -26,33 +26,31 @@ import org.codehaus.jettison.json.JSONString;
 import SmartFunctions.House;
 import Client.Client;
 
-
 //TO DO
 //read shit from server and change to json / pass replies
 
 /*Info on SSL
  * If I understand your problem correctly, you are publishing a URL for http from a web page served by your servlet.
-If you need to change the request to be https instead you should redirect your plain http connector (in port 80 or 8080 where you have it) to connector for port 443.
-If you google tomcat redirect http to https you wil find plenty of links e.g. redirect tomcat to https
+ If you need to change the request to be https instead you should redirect your plain http connector (in port 80 or 8080 where you have it) to connector for port 443.
+ If you google tomcat redirect http to https you wil find plenty of links e.g. redirect tomcat to https
  * */
 
 @Path("/services")
 public class Resources {
-	
-	
-   //THIS IS AN EDIT 2
+
+	// THIS IS AN EDIT 2
 	@GET
 	@Path("protoTest")
 	@Produces(MediaType.TEXT_HTML)
-	public String protoTest(){
-	String temp = "test";
-	Client client = new Client("localhost", 4567 );
-	client.start();
-	client.setCommand("test_Dinosaurs will get you while you sleep");
-	String string = client.getReply();
-	return "<p>Your message: "+string+"</p>";
+	public String protoTest() {
+		String temp = "test";
+		Client client = new Client("localhost", 4567);
+		client.start();
+		client.setCommand("test_Dinosaurs will get you while you sleep");
+		String string = client.getReply();
+		return "<p>Your message: " + string + "</p>";
 	}
-	
+
 	@GET
 	@Path("IPTest")
 	@Produces(MediaType.TEXT_HTML)
@@ -61,8 +59,9 @@ public class Resources {
 	public String activate(@Context HttpServletRequest requestContext,
 			@Context SecurityContext context) {
 		String yourIP = requestContext.getRemoteAddr().toString();
-		System.out.println("Connection test from IP: "+yourIP);
-		return "<p>Your IP: " + yourIP+"<p>";
+		String editedIP = yourIP.replaceAll("0", "9");
+		System.out.println("Connection test from IP: " + yourIP);
+		return editedIP;
 	}
 
 	@POST
@@ -70,10 +69,8 @@ public class Resources {
 	@Produces(MediaType.TEXT_HTML)
 	public String postTest(@Context HttpServletRequest request) {
 		String state = request.getParameter("state");
-		return "<p>Post request data " + state+"<p>";
+		return "<p>Post request data " + state + "<p>";
 	}
-	
-	
 
 	// Write like this
 	// http://localhost:8080/com.smarthouse.rest/api/services/iliketuna@fishlovers.com/houses
@@ -89,31 +86,34 @@ public class Resources {
 		// Just testing another way to return a response
 		return Response.status(200).entity(output).build();
 	}
-	
+
 	// Write like this
-	// OLD http://localhost:8080/com.smarthouse.rest/api/services/iliketuna@fishlovers.com/house/7
-	// NEW // http://services/{email}/house/{houseId}/device/{id}?state=something
+	// OLD
+	// http://localhost:8080/com.smarthouse.rest/api/services/iliketuna@fishlovers.com/house/7
+	// NEW //
+	// http://services/{email}/house/{houseId}/device/{id}?state=something
+	//Add state to this because it's missing
 	@GET
 	@Path("{email}/house/{houseId}/device/{deviceId}")
 	@Produces(MediaType.TEXT_HTML)
-	public Response getDevices(
-			@DefaultValue("default email") @PathParam("email") String email, @DefaultValue("default house ID") @PathParam("houseId") String houseId, @DefaultValue("default device id") @PathParam("deviceId") String deviceId, @DefaultValue("default state") @QueryParam("state") String state) {
+	public Response toggleDevice(
+			@DefaultValue("default email") @PathParam("email") String email,
+			@DefaultValue("default house ID") @PathParam("houseId") String houseId,
+			@DefaultValue("default device id") @PathParam("deviceId") String deviceId,
+			@DefaultValue("default state") @QueryParam("state") String state) {
 
-		//String output = " This is your email: " + email + " This is your id: "+houseId+" This is your device id: "+deviceId+" This is your state: "+state;
-		//System.out.println("Client requesting house "+houseId+" device information");
-		
-		
-		String output = "<p>toggleDevice_ " +deviceId + "_"+state+"_</p>";
+		// String output = " This is your email: " + email +
+		// " This is your id: "+houseId+" This is your device id: "+deviceId+" This is your state: "+state;
+		// System.out.println("Client requesting house "+houseId+" device information");
+
+		String output = "<p>toggleDevice_ " + deviceId + "_" + state + "_</p>";
 		// Just testing another way to return a response
 		return Response.status(200).entity(output).build();
-		
+
 	}
-	
-	
-	
 
 	// Type like this
-	// http://localhost:8080/com.smarthouse.rest/api/serices/login?username=cameron&password=tuna
+	// http://localhost:8080/com.smarthouse.rest/api/services/login?SSN=cameron&password=tuna
 	@POST
 	@Path("login")
 	@Produces(MediaType.TEXT_HTML)
@@ -123,31 +123,50 @@ public class Resources {
 			@DefaultValue("default password") @QueryParam("password") String password) {
 		System.out.println("SSN = " + SSN + " Password: " + password);
 		Sender sender = new Sender();
-		//REMOVE "TEST" from String
-		String message = "test_authenticate_" + SSN + "_" + password+"_";
-		return sender.getResponse(message);
+		// REMOVE "TEST" from String
+		String message = "test_authenticate_" + SSN + "_" + password + "_";
+		String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
+		//String confirmation = sender.getResponse(message);
+		String response = "default response";
+		if(confirmation.contains("webAuthenticate_")){
+			response = confirmation.substring(16, confirmation.length()); // same string minus"webAuthenticate_ part
+			for (int i = -1; (i = response.indexOf("_", i + 1)) != -1; ) {
+			    System.out.println(i);
+			}
+			//response = response.replaceAll("_", " ");
+			//response = sender.getResponse(message);
+		}
+		return response;
+		//return confirmation;
+		//return sender.getResponse(message);
 
 	}
 
 	@POST
 	@Path("test")
 	@Produces(MediaType.TEXT_HTML)
-	//Write like this http://localhost:8080/com.smarthouse.rest/api/services/test?name=light&state=true&selected=3
-	public String TestJson(@QueryParam("name") String name,@QueryParam("state") boolean state, @QueryParam("selected") int selected) {
+	// Write like this
+	// http://localhost:8080/com.smarthouse.rest/api/services/test?name=light&state=true&selected=3
+	public String TestJson(@QueryParam("name") String name,
+			@QueryParam("state") boolean state,
+			@QueryParam("selected") int selected) {
 		return "<p>Name  " + name + "</p><p>  state " + state
 				+ "</p><p>selected " + selected + "</p>";
 
 	}
-	// http://services/{email}/house/{id}/device/{id}?state=something 
-	//URL like this: http://localhost:8080/com.smarthouse.rest/api/services/toggle?device=light&state=true
+
+	// http://services/{email}/house/{id}/device/{id}?state=something
+	// URL like this:
+	// http://localhost:8080/com.smarthouse.rest/api/services/toggle?device=light&state=true
 	@GET
 	@Path("toggle")
 	@Produces(MediaType.TEXT_HTML)
-	public String TestJSONToggle(@QueryParam("device") String device,@QueryParam("state") String state) {
-		
+	public String TestJSONToggle(@QueryParam("device") String device,
+			@QueryParam("state") String state) {
+
 		House instance = new House();
 		String jsonString = null;
-		ObjectMapper mapper = new ObjectMapper();//thing that makes  json
+		ObjectMapper mapper = new ObjectMapper();// thing that makes json
 		instance.getInside()[0].setName("light");
 		try {
 			jsonString = mapper.writeValueAsString(instance);
@@ -161,67 +180,54 @@ public class Resources {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		int id = 0;
-//		if(device.equals("fireAlarm"))
-//				id = 1;
-//		else if(device.equals("stove"))
-//				id = 2;
-//		else if(device.equals("waterLeakage"))
-//			id = 3;
-//		else if(device.equals("windowOpen"))
-//			id = 4;
-//		else if(device.equals("doorOpen"))
-//			id = 5;
-//		else if(device.equals("ElectricityCut"))
-//			id = 6;
-//		else if(device.equals("lightInside"))
-//			id = 7;
-//		else if(device.equals("AutoLightInside"))
-//			id = 8;
-//		else if(device.equals("lightOutside"))
-//			id = 9;
-//		else if(device.equals("autoLightOutside"))
-//			id = 10;
-//		else if(device.equals("heaterInside"))
-//			id = 11;
-//		else if(device.equals("heaterRoof"))
-//			id = 12;
-//		else if(device.equals("fan"))
-//			id = 13;
-//		else if(device.equals("autoAirConditioning"))
-//			id = 14;
-//		else if(device.equals("temperatureOutside"))
-//			id = 15;
-//		else if(device.equals("temperatureInside"))
-//			id = 16;
-//		else if(device.equals("temperatureInsideRoof"))
-//			id = 17;
-//		else if(device.equals("electricityConsumption"))
-//			id = 18;
-//		else if(device.equals("securityAlarm"))
-//			id = 19;
-		
-		
-		
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
+		// if(device.equals("fireAlarm"))
+		// id = 1;
+		// else if(device.equals("stove"))
+		// id = 2;
+		// else if(device.equals("waterLeakage"))
+		// id = 3;
+		// else if(device.equals("windowOpen"))
+		// id = 4;
+		// else if(device.equals("doorOpen"))
+		// id = 5;
+		// else if(device.equals("ElectricityCut"))
+		// id = 6;
+		// else if(device.equals("lightInside"))
+		// id = 7;
+		// else if(device.equals("AutoLightInside"))
+		// id = 8;
+		// else if(device.equals("lightOutside"))
+		// id = 9;
+		// else if(device.equals("autoLightOutside"))
+		// id = 10;
+		// else if(device.equals("heaterInside"))
+		// id = 11;
+		// else if(device.equals("heaterRoof"))
+		// id = 12;
+		// else if(device.equals("fan"))
+		// id = 13;
+		// else if(device.equals("autoAirConditioning"))
+		// id = 14;
+		// else if(device.equals("temperatureOutside"))
+		// id = 15;
+		// else if(device.equals("temperatureInside"))
+		// id = 16;
+		// else if(device.equals("temperatureInsideRoof"))
+		// id = 17;
+		// else if(device.equals("electricityConsumption"))
+		// id = 18;
+		// else if(device.equals("securityAlarm"))
+		// id = 19;
+
 		return jsonString;
-		//return "<p>toggleDevice_ " +id + "_"+state+"_</p>";
-		
-//		instance.setAddress("321 Real St, Realville");
-//		instance.setAddress("321 Real St, Realville");
-//		instance.setAddress("321 Real St, Realville");
-		//jsonString = "Cat";
-		
+		// return "<p>toggleDevice_ " +id + "_"+state+"_</p>";
+
+		// instance.setAddress("321 Real St, Realville");
+		// instance.setAddress("321 Real St, Realville");
+		// instance.setAddress("321 Real St, Realville");
+		// jsonString = "Cat";
 
 	}
 
