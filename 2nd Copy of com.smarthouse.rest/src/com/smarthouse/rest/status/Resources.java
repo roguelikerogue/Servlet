@@ -124,11 +124,13 @@ public class Resources {
 		System.out.println("SSN = " + SSN + " Password: " + password);
 		Sender sender = new Sender();
 		// REMOVE "TEST" from String
-		String message = "test_authenticate_" + SSN + "_" + password + "_";
+		String message = "authenticate_" + SSN + "_" + password + "_";
 		String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
 		//String confirmation = sender.getResponse(message);
-		String response = "default response";
+		String response = "error";
 		if(confirmation.contains("webAuthenticate_")){
+			
+			response = confirmation; // same string minus"webAuthenticate_ part
 			//response = confirmation.substring(16, confirmation.length()); // same string minus"webAuthenticate_ part
 			int indexArrayLength = 10;
 			int[] indexArray= new int[indexArrayLength];
@@ -144,14 +146,18 @@ public class Resources {
 				System.out.println("Test: "+ indexArray[i]);
 			}
 			
-			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID
+			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID.
+			String houseAddress = response.substring(indexArray[0]+1, indexArray[4]);
+			houseAddress = houseAddress.replaceAll("_", " ");
+			String houseID = response.substring(indexArray[4]+1, indexArray[5]);
+			//int houseID = String.parseInt(response.substring(indexArray[3]+1, indexArray[4]+1));
+			System.out.println(houseID);
+			System.out.println(houseAddress);
 			
-			//response = response.substring(indexArray[3]+1, indexArray[4]-1);
 			
-			//response = response.replaceAll("_", " ");
+			response = response.replaceAll("_", " ");
 			//response = sender.getResponse(message);
 		}
-		response = sender.getResponse(message);
 		return response;
 		//return confirmation;
 		//return sender.getResponse(message);
