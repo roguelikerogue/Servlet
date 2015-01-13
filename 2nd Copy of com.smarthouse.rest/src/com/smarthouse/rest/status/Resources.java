@@ -158,9 +158,9 @@ public class Resources {
 			response = response.replaceAll("_", " ");
 			//response = sender.getResponse(message);
 		}
-		return response;
+		//return response;
 		//return confirmation;
-		//return sender.getResponse(message);
+		return sender.getResponse(message);
 
 	}
 
