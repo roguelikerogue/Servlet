@@ -129,13 +129,29 @@ public class Resources {
 		//String confirmation = sender.getResponse(message);
 		String response = "default response";
 		if(confirmation.contains("webAuthenticate_")){
-			response = confirmation.substring(16, confirmation.length()); // same string minus"webAuthenticate_ part
+			//response = confirmation.substring(16, confirmation.length()); // same string minus"webAuthenticate_ part
+			int indexArrayLength = 10;
+			int[] indexArray= new int[indexArrayLength];
+			//Print out all instances 
+			int indexCount = 0;
+			//This method counts the occurrence of "_" puts their indexes in an array
 			for (int i = -1; (i = response.indexOf("_", i + 1)) != -1; ) {
-			    System.out.println(i);
+				indexArray[indexCount] = i;
+			    System.out.println("Value of index "+indexArray+": "+ indexArray[indexCount]);
+				indexCount++;
 			}
+			for(int i = 0; i<indexArrayLength; i++){
+				System.out.println("Test: "+ indexArray[i]);
+			}
+			
+			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID
+			
+			//response = response.substring(indexArray[3]+1, indexArray[4]-1);
+			
 			//response = response.replaceAll("_", " ");
 			//response = sender.getResponse(message);
 		}
+		response = sender.getResponse(message);
 		return response;
 		//return confirmation;
 		//return sender.getResponse(message);
