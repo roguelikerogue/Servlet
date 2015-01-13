@@ -124,14 +124,18 @@ public class Resources {
 		System.out.println("SSN = " + SSN + " Password: " + password);
 		Sender sender = new Sender();
 		// REMOVE "TEST" from String
-		String message = "authenticate_" + SSN + "_" + password + "_";
-		String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
+		//String message = "authenticate_" + SSN + "_" + password + "_";
+		String message ="Unauthorized_DEFAULT_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		
+		//example confirmations
+		String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
+		//String confirmation = "webAuthenticate_adress_zip_city_country_houseId_firsName_lastName_sureName_idAdmin_";
 		//String confirmation = sender.getResponse(message);
 		String response = "error";
-		if(confirmation.contains("webAuthenticate_")){
+		if(confirmation.contains("authenticate_")){
 			
-			response = confirmation; // same string minus"webAuthenticate_ part
-			//response = confirmation.substring(16, confirmation.length()); // same string minus"webAuthenticate_ part
+			response = confirmation; // same string minus"authenticate_ part
+			//response = confirmation.substring(16, confirmation.length()); // same string minus"authenticate_ part
 			int indexArrayLength = 10;
 			int[] indexArray= new int[indexArrayLength];
 			//Print out all instances 
@@ -146,7 +150,7 @@ public class Resources {
 				System.out.println("Test: "+ indexArray[i]);
 			}
 			
-			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID.
+			//ELEMENT 4 HAS THE INDEX 1 BEFORE THE HOUSE ID. There are some extra parameters we might use
 			String houseAddress = response.substring(indexArray[0]+1, indexArray[4]);
 			houseAddress = houseAddress.replaceAll("_", " ");
 			String houseID = response.substring(indexArray[4]+1, indexArray[5]);
@@ -155,7 +159,7 @@ public class Resources {
 			System.out.println(houseAddress);
 			
 			
-			response = response.replaceAll("_", " ");
+			//response = response.replaceAll("_", " ");
 			//response = sender.getResponse(message);
 		}
 		//return response;
