@@ -172,9 +172,9 @@ public class Resources {
 	@Path("loginTest")
 	@Produces(MediaType.TEXT_HTML)
 	// can also do TEXT_PLAIN
-	public String loginTest() {
+	public String authTest() {
 		Sender sender = new Sender();
-		String message = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
+		String message = "unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
 		
 		return sender.getResponse(message);
 
