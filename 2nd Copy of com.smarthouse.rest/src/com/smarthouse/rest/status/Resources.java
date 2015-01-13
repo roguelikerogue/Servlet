@@ -125,7 +125,7 @@ public class Resources {
 		Sender sender = new Sender();
 		// REMOVE "TEST" from String
 		//String message = "authenticate_" + SSN + "_" + password + "_";
-		String message ="Unauthorized_DEFAULT_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		String message ="Unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
 		
 		//example confirmations
 		String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
@@ -179,7 +179,7 @@ public class Resources {
 		Sender sender = new Sender();
 		// REMOVE "TEST" from String
 		//String message = "authenticate_" + SSN + "_" + password + "_";
-		String message ="Unauthorized_DEFAULT_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
+		String message ="Unauthorized_12343234_Cameron_brownlee_cameron@gmail.com_ilikecats_1";
 		
 		//example confirmations
 		String confirmation = "authenticate_12 fältvägen_29139_kristianstad_sweden_1_cameron_brownlee_true";
